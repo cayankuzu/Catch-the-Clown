@@ -1,0 +1,200 @@
+@font-face {
+  font-family: "Franxurter";
+  src: url("catch_the_clown_assets/Franxurter.ttf") format("truetype");
+  font-display: swap;
+}
+
+:root {
+  color-scheme: dark;
+  --blue: #01afd1;
+  --yellow: #f8e71c;
+  --ink: #071726;
+  --paper: #effcff;
+  --line: rgba(151, 231, 246, .2);
+}
+
+* { box-sizing: border-box; }
+
+body {
+  min-height: 100svh;
+  margin: 0;
+  color: var(--paper);
+  background:
+    radial-gradient(circle at 15% 8%, rgba(1, 175, 209, .23), transparent 34rem),
+    radial-gradient(circle at 88% 90%, rgba(248, 231, 28, .12), transparent 32rem),
+    #06111d;
+  font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  overscroll-behavior: none;
+}
+
+button { font: inherit; }
+
+.game-shell {
+  width: min(1060px, calc(100% - 30px));
+  margin: 0 auto;
+  padding: max(18px, env(safe-area-inset-top)) 0 max(24px, env(safe-area-inset-bottom));
+}
+
+.game-header {
+  display: flex;
+  padding: 4px 2px 16px;
+  align-items: end;
+  justify-content: space-between;
+  gap: 20px;
+}
+
+.eyebrow {
+  color: #82c9d7;
+  font-size: .67rem;
+  font-weight: 800;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+}
+
+h1 {
+  margin: 4px 0 0;
+  color: var(--blue);
+  font: 400 clamp(2.5rem, 8vw, 5.8rem)/.84 Franxurter, Impact, sans-serif;
+}
+
+.header-actions {
+  display: flex;
+  gap: 9px;
+}
+
+.utility-button,
+.primary-button {
+  min-height: 46px;
+  padding: 0 17px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  color: var(--paper);
+  background: rgba(255, 255, 255, .06);
+  cursor: pointer;
+  touch-action: manipulation;
+}
+
+.help-button {
+  border-color: var(--blue);
+  color: #8feaff;
+}
+
+.stage-card {
+  position: relative;
+  overflow: hidden;
+  border: 2px solid var(--blue);
+  border-radius: 22px;
+  background: #04101c;
+  box-shadow: 0 26px 80px rgba(0, 0, 0, .36);
+}
+
+canvas {
+  display: block;
+  width: 100%;
+  aspect-ratio: 945 / 600;
+  background: #071726;
+  cursor: crosshair;
+  touch-action: none;
+}
+
+.game-overlay {
+  position: absolute;
+  inset: 0;
+  display: none;
+  padding: 18px;
+  place-items: center;
+  background: rgba(2, 12, 20, .68);
+  backdrop-filter: blur(8px);
+}
+
+.game-overlay.is-visible { display: grid; }
+
+.overlay-panel {
+  width: min(520px, 100%);
+  max-height: calc(100% - 8px);
+  overflow-y: auto;
+  padding: clamp(24px, 6vw, 48px);
+  border: 1px solid rgba(143, 234, 255, .22);
+  border-radius: 22px;
+  background: rgba(6, 23, 38, .95);
+  box-shadow: 0 24px 80px rgba(0, 0, 0, .4);
+  text-align: center;
+}
+
+.overlay-kicker {
+  color: var(--yellow);
+  font-size: .68rem;
+  font-weight: 850;
+  letter-spacing: .17em;
+  text-transform: uppercase;
+}
+
+.overlay-panel h2 {
+  margin: 10px 0 0;
+  color: var(--blue);
+  font: 400 clamp(2rem, 7vw, 3.5rem)/1 Franxurter, Impact, sans-serif;
+}
+
+.overlay-text {
+  margin: 15px 0 23px;
+  color: #b8d0d7;
+  font-size: .87rem;
+  line-height: 1.5;
+  text-align: left;
+}
+
+.overlay-text p { margin: 0 0 13px; }
+.overlay-text ul { margin: 0; padding-left: 19px; }
+.overlay-text li + li { margin-top: 7px; }
+
+.primary-button {
+  width: 100%;
+  color: #071726;
+  border-color: var(--yellow);
+  background: var(--yellow);
+  font-weight: 850;
+}
+
+.game-footer {
+  display: flex;
+  padding: 13px 3px 0;
+  justify-content: space-between;
+  gap: 20px;
+  color: #8aa7b0;
+  font-size: .72rem;
+}
+
+@media (max-width: 620px) {
+  .game-shell { width: calc(100% - 18px); }
+  .game-header { align-items: center; }
+  h1 { font-size: 2.65rem; }
+  .utility-button { min-height: 42px; padding: 0 13px; font-size: .74rem; }
+  .stage-card { border-radius: 16px; }
+  canvas { min-height: 360px; aspect-ratio: auto; }
+  .game-footer { display: none; }
+}
+
+@media (max-width: 420px) {
+  .game-header { align-items: flex-start; flex-direction: column; }
+  .header-actions { width: 100%; }
+  .utility-button { flex: 1; }
+}
+
+@media (max-height: 560px) and (orientation: landscape) {
+  .game-shell { width: min(calc(100% - 18px), 960px); padding: 7px 0; }
+  .game-header {
+    position: absolute;
+    z-index: 4;
+    top: 14px;
+    right: 18px;
+    padding: 0;
+  }
+  .game-header > div:first-child,
+  #soundButton { display: none; }
+  canvas { height: calc(100svh - 14px); min-height: 0; aspect-ratio: auto; }
+  .game-footer { display: none; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: .01ms !important; }
+}
